@@ -38,3 +38,11 @@ test("unknown routes and unsafe methods do not expose the page", async () => {
   assert.equal((await worker.fetch(url("/admin"))).status, 404);
   assert.equal((await worker.fetch(new Request(url("/").url, {method:"POST"}))).status, 405);
 });
+test("hero AVIF otimizada está hospedada no Worker", async () => {
+  const response = await worker.fetch(url("/hero-familia.avif?v=2"));
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("content-type"), "image/avif");
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  assert.equal(bytes.length, 13135);
+  assert.equal(String.fromCharCode(...bytes.slice(4, 8)), "ftyp");
+});
