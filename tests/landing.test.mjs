@@ -30,3 +30,8 @@ test("não inventa credenciamento ou garantias comerciais", () => {
   assert.doesNotMatch(html, /CRECI\s*\d+|SUSEP\s*\d+/i);
   assert.doesNotMatch(html, /aprovação garantida|sem análise de crédito/i);
 });
+test("hero usa a fotografia aprovada e não a antiga ilustração", () => {
+  assert.match(html, /src="\/hero-familia\.avif\?v=2"/);
+  assert.match(html, /alt="Família passeando por um condomínio residencial ao pôr do sol"/);
+  assert.doesNotMatch(html, /viewBox="0 0 560 630"/);
+});
